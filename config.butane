@@ -17,20 +17,20 @@ storage:
     wipe_table: true
     partitions:
     -
-      label: "raid.1.1"
+      label: "storageraid.1.1"
       number: 1
   - device: /dev/sde
     wipe_table: true
     partitions:
     -
-      label: "raid.1.2"
+      label: "storageraid.1.2"
       number: 1
   raid:
     - name: storage
       level: raid1
       devices:
-      - /dev/disk/by-partlabel/raid.1.1
-      - /dev/disk/by-partlabel/raid.1.2
+      - /dev/disk/by-partlabel/storageraid.1.1
+      - /dev/disk/by-partlabel/storageraid.1.2
   filesystems:
     - path: /var/storage
       device: /dev/md/storage
@@ -49,7 +49,7 @@ storage:
 systemd:
   units:
     - name: ucore-unsigned-autorebase.service
-      enabled: true
+      enabled: false
       contents: |
         [Unit]
         Description=uCore autorebase to unsigned OCI and reboot
@@ -67,7 +67,7 @@ systemd:
         [Install]
         WantedBy=multi-user.target
     - name: ucore-signed-autorebase.service
-      enabled: true
+      enabled: false
       contents: |
         [Unit]
         Description=uCore autorebase to signed OCI and reboot
@@ -85,7 +85,7 @@ systemd:
         [Install]
         WantedBy=multi-user.target
     - name: ucore-setup-tailscale.service
-      enabled: true
+      enabled: false
       contents: |
         [Unit]
         Description=Start and login to tailscale on uCore rebased system
